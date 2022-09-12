@@ -1,0 +1,30 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.container{
+  max-width: 1000px;
+  margin: 0 auto;
+  font-size: 20px;
+}
+h1{
+  text-align: center;
+}
+.login__body{
+  max-width: 500px;
+  margin: 100px auto;
+  border-radius: 20px;
+  border: solid 1px black;
+  padding: 5px;
+  text-align: center;
+}
+.login__attribute{
+  margin: 5px;
+}
+.button{
+  top: 0;
+  left: 0;
+}
+.err{
+  color: red;
+}
