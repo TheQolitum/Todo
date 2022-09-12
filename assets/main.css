@@ -27,10 +27,12 @@
 .login-route {
   margin-top: auto;
 }
-a{
+
+a {
   text-decoration: none;
   color: black;
 }
+
 .content {
   max-width: 800px;
   margin: 50px auto;
@@ -61,41 +63,48 @@ li {
   max-width: 100%;
 }
 
-textarea{
+textarea {
   max-width: 600px;
   width: 500px;
 }
 
 
 @media (max-width: 1600px) {
-  .container{
+  .container {
     max-width: 1000px;
   }
-  .content{
+
+  .content {
     max-width: 600px;
   }
 }
+
 @media (max-width: 1200px) {
-  .container{
+  .container {
     max-width: 800px;
   }
-  .content{
+
+  .content {
     max-width: 400px;
   }
-  #task-input{
+
+  #task-input {
     width: 400px;
   }
 }
+
 @media (max-width: 800px) {
-  *{
+  * {
     font-size: 16px;
   }
-  h1{
+
+  h1 {
     font-size: 24px;
   }
 }
+
 @media (max-width: 450px) {
-  #task-input{
+  #task-input {
     width: 300px;
   }
 }

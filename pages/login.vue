@@ -1,6 +1,14 @@
 <template>
-  <body id="app__login">
+  <body>
   <div class="container">
+    <div class="header">
+      <h1>Not Microsoft To Do</h1>
+      <div class="login-route">
+        <h2>
+          <router-link to="/">To Do</router-link>
+        </h2>
+      </div>
+    </div>
     <h1>Добро пожаловать!</h1>
     <div class="login__body">
       <p class="login__attribute">Введите email:</p>
