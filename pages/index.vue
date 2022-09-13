@@ -14,7 +14,7 @@
       <p class="err" v-if="showLoginError">Логин не корректный!</p>
       <p class="login__attribute">Введите пароль:</p>
       <input class="login__attribute" type="password" v-model="password">
-      <p class="err" v-if="showPassError">Пароль не корректный!</p>
+      <p class="err" v-if="showPassError">Пароль должен содержать минимум 8 символов!</p>
       <br>
       <button @click="checker" v-model="check">
         Log in
@@ -25,9 +25,7 @@
 </template>
 
 <script>
-
 export default {
-
   data() {
     return {
       check: false,
@@ -50,7 +48,7 @@ export default {
       return loginExist;
     },
     validatePass() {
-      let passExist = !!this.password;
+      let passExist = !!this.password && this.password.length > 7;
       this.showPassError = !passExist;
       return passExist;
     },

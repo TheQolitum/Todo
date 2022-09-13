@@ -14,13 +14,14 @@
         <div class="input">
           <h2>Введите текст задачи:</h2>
           <input id="task-input" type="text" v-model="item" @keypress.enter="add">
+          <p v-if="showTaskError">Вы не ввели задачу!</p>
           <button @click="add">Добавить</button>
         </div>
         <h2>Надо сделать:</h2>
         <ul class="task-list" v-if="itemsExist">
           <li class="task" v-for="(item, index) in items" :key="index">
             <button @click="remove(index)">Сделано</button>
-            <textarea rows="6">{{ item }}</textarea>
+            <textarea rows="4">{{ item }}</textarea>
           </li>
         </ul>
         <div v-else>
@@ -38,15 +39,24 @@ export default {
     return {
       items: [],
       item: '',
+      showTaskError: false,
     }
   },
   methods: {
-    add(item) {
-      this.items.push(this.item);
+    add() {
+      if (this.noneTask()) {
+        this.items.push(this.item);
+        this.item = '';
+      }
     },
-    remove(index, items) {
+    remove(index) {
       this.items.splice(index, 1);
     },
+    noneTask() {
+      let taskExist = !!this.item;
+      this.showTaskError = !taskExist;
+      return taskExist;
+    }
   },
   computed: {
     itemsExist() {
