@@ -4,58 +4,65 @@
     <div class="header">
       <h1>Not Microsoft To Do</h1>
       <div class="login-route">
-        <h2>
-          <router-link to="/login">Log in</router-link>
-        </h2>
       </div>
     </div>
-    <div id="app">
-      <div class="content">
-        <div class="input">
-          <h2>Введите текст задачи:</h2>
-          <input id="task-input" type="text" v-model="item" @keypress.enter="add">
-          <button @click="add">Добавить</button>
-        </div>
-        <h2>Надо сделать:</h2>
-        <ul class="task-list" v-if="itemsExist">
-          <li class="task" v-for="(item, index) in items" :key="index">
-            <button @click="remove(index)">Сделано</button>
-            <textarea rows="6">{{ item }}</textarea>
-          </li>
-        </ul>
-        <div v-else>
-          Ура! Всё сделано!
-        </div>
-      </div>
+    <br>
+    <h1>Авторизируйтесь для доступа к вашему списку задач!</h1>
+    <div class="login__body">
+      <p class="login__attribute">Введите email:</p>
+      <input class="log" type="text" v-model="login">
+      <p class="err" v-if="showLoginError">Логин не корректный!</p>
+      <p class="login__attribute">Введите пароль:</p>
+      <input class="login__attribute" type="password" v-model="password">
+      <p class="err" v-if="showPassError">Пароль не корректный!</p>
+      <br>
+      <button @click="checker" v-model="check">
+        Log in
+      </button>
     </div>
   </div>
   </body>
 </template>
 
 <script>
+
 export default {
+
   data() {
     return {
-      items: [],
-      item: ''
+      check: false,
+      showLoginError: false,
+      showPassError: false,
+      login: ''
     }
   },
   methods: {
-    add(item) {
-      this.items.push(this.item);
+    checker() {
+      if (this.validateLogin() & this.validatePass()) {
+        this.check = true;
+        this.redirect()
+      }
     },
-    remove(index, items) {
-      this.items.splice(index, 1);
+    validateLogin() {
+      let mailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
+      let loginExist = !!this.login && mailReg.test(this.login);
+      this.showLoginError = !loginExist;
+      return loginExist;
     },
-  },
-  computed: {
-    itemsExist() {
-      return this.items.length != 0;
-    }
+    validatePass() {
+      let passExist = !!this.password;
+      this.showPassError = !passExist;
+      return passExist;
+    },
+    redirect() {
+      if (this.check) {
+        this.$router.push('/todo')
+      }
+    },
   }
 }
 </script>
 
 <style lang="css">
-@import "assets/main.css";
+@import "../assets/style/login.css";
 </style>
