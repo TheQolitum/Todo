@@ -14,9 +14,10 @@
         <div class="input">
           <h2>Введите текст задачи:</h2>
           <input id="task-input" type="text" v-model="item" @keypress.enter="add">
-          <p v-if="showTaskError">Вы не ввели задачу!</p>
           <button @click="add">Добавить</button>
+          <p v-if="showTaskError">Вы не ввели задачу!</p>
         </div>
+        <br>
         <h2>Надо сделать:</h2>
         <ul class="task-list" v-if="itemsExist">
           <li class="task" v-for="(item, index) in items" :key="index">
