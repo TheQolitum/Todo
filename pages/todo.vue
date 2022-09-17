@@ -43,15 +43,20 @@ export default {
       showTaskError: false,
     }
   },
+  mounted() {
+    this.items = this.$store.getters.getItems;
+  },
   methods: {
     add() {
       if (this.noneTask()) {
         this.items.push(this.item);
         this.item = '';
+        this.$store.commit('setItems', this.items);
       }
     },
     remove(index) {
       this.items.splice(index, 1);
+      this.$store.commit('setItems', this.items);
     },
     noneTask() {
       let taskExist = !!this.item;
