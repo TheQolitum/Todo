@@ -3,8 +3,7 @@
   <div class="container">
     <div class="header">
       <h1>Not Microsoft To Do</h1>
-      <div class="login-route">
-      </div>
+      <div class="login-route"></div>
     </div>
     <br>
     <h1>Авторизируйтесь для доступа к вашему списку задач!</h1>
