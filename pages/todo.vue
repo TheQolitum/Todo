@@ -21,8 +21,8 @@
         <h2>Надо сделать:</h2>
         <ul class="task-list" v-if="itemsExist">
           <li class="task" v-for="(item, index) in items" :key="index">
-            <button @click="remove(index)">Сделано</button>
-            <textarea rows="4">{{ item }}</textarea>
+            <button @click="remove(item.id)">Сделано</button>
+            <textarea rows="4">{{ item.name }}</textarea>
           </li>
         </ul>
         <div v-else>
@@ -38,20 +38,34 @@
 export default {
   data() {
     return {
-      items: [],
       item: '',
+      items: [],
       showTaskError: false,
     }
   },
-  mounted() {
-    this.items = this.$store.getters.getItems;
+  async mounted() {
+    // this.items = this.$store.getters.getItems;
+    this.items = await this.getItemsDat();
   },
   methods: {
     add() {
       if (this.noneTask()) {
-        this.items.push(this.item);
-        this.item = '';
-        this.$store.commit('setItems', this.items);
+        // this.items.push(this.item);
+        // this.$store.commit('setItems', this.items);
+
+        fetch('http://localhost:4000/todo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify({
+            text: this.item
+          })
+        }).then(async (response) => {
+          this.items = await this.getItemsDat();
+          console.log(this.items)
+          this.item = '';
+        });
       }
     },
     remove(index) {

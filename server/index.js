@@ -1,15 +1,39 @@
 const express = require('express');
-const path = require('path');
-
-// const __dirname = path.resolve()
-const PORT = 3000;
+var bodyParser = require('body-parser');
+var mysql = require('mysql');
 
 const app = express();
+const port = 4000;
 
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '/pages', '/index.vue'))
+app.use(express.urlencoded({extended: true}));
+app.use(bodyParser.json())
+
+var connection = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'password',
+  database: 'todo'
+});
+
+app.get("/items", function (req, res) {
+  connection.query("SELECT * FROM items", function (err, data) {
+    if (err) return console.log(err);
+    res.send(data)
+  });
 })
 
-app.listen(PORT, () => {
-  console.log(`Application listening on port ${PORT}!`);
-});
+app.post("/todo", function (req, res) {
+  connection.query("insert into items (name) values (?)", [req.body.text], function (err, data) {
+    if (err) return console.log(err);
+    res.send('success');
+  });
+})
+
+app.post("/delete", function (req, res) {
+  connection.query("delete from items where id=?", [req.body.id], function (err, data) {
+    if (err) return console.log(err);
+    res.send('success');
+  });
+})
+
+app.listen(port);
