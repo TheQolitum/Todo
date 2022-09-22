@@ -68,14 +68,31 @@ export default {
         });
       }
     },
-    remove(index) {
-      this.items.splice(index, 1);
-      this.$store.commit('setItems', this.items);
+    remove(id) {
+      // this.items.splice(index, 1);
+      // this.$store.commit('setItems', this.items);
+      fetch('http://localhost:4000/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+          id: id
+        })
+      }).then(async (response) => {
+        this.items = await this.getItemsDat();
+        this.item = '';
+      });
     },
     noneTask() {
       let taskExist = !!this.item;
       this.showTaskError = !taskExist;
       return taskExist;
+    },
+    async getItemsDat() {
+      let response = await fetch('http://localhost:4000/items');
+      let items = await response.json();
+      return items;
     }
   },
   computed: {
